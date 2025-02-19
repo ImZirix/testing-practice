@@ -20,4 +20,42 @@ const calculator = {
   divide: (a, b) => a / b,
 };
 
-module.exports = { capitalize, reverseString, calculator };
+function caesarCipher(str, shift) {
+  if (typeof str !== "string" || typeof shift !== "number") return str;
+
+  return str
+    .split("")
+    .map((char) => {
+      if (char.match(/[a-z]/i)) {
+        const code = char.charCodeAt(0);
+        const base = code >= 65 && code <= 90 ? 65 : 97;
+        return String.fromCharCode(
+          ((((code - base + shift) % 26) + 26) % 26) + base
+        );
+      }
+      return char;
+    })
+    .join("");
+}
+
+function analyzeArray(arr) {
+  if (!Array.isArray(arr) || arr.length === 0 || arr.some(isNaN)) {
+    return null;
+  }
+
+  const sum = arr.reduce((acc, num) => acc + num, 0);
+  return {
+    average: sum / arr.length,
+    min: Math.min(...arr),
+    max: Math.max(...arr),
+    length: arr.length,
+  };
+}
+
+module.exports = {
+  capitalize,
+  reverseString,
+  calculator,
+  caesarCipher,
+  analyzeArray,
+};
